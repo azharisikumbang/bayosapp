@@ -28,4 +28,10 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::group(['prefix' => 'backend', 'as' => 'backend'], function() {
+    Route::get('/welcome', function() {
+        return Inertia::render('Backend/Welcome');
+    })->name('.welcome');
+});
+
 require __DIR__.'/auth.php';
