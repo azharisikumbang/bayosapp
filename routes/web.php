@@ -29,6 +29,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// super-admin routes
 Route::group(['prefix' => 'backend', 'as' => 'backend'], function() {
     Route::get('/welcome', function() {
         return Inertia::render('Backend/Welcome');
@@ -37,6 +38,13 @@ Route::group(['prefix' => 'backend', 'as' => 'backend'], function() {
 
     Route::resource('/users', UserManagementController::class)
         ->names('-users');
+});
+
+// adminitrator routes
+Route::group(['prefix' => 'admin', 'as' => 'admin'], function() {
+    Route::get('/dashboard', function() {
+        return Inertia::render('Admin/Dashboard');
+    })->name('.dashboard');
 });
 
 require __DIR__.'/auth.php';
