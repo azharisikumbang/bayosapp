@@ -31,7 +31,7 @@ const showingNavigationDropdown = ref(false);
                                 <BreezeNavLink :href="route('backend.welcome')" :active="route().current('backend.welcome')">
                                     Beranda
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('backend.welcome')" :active="route().current('backend')">
+                                <BreezeNavLink :href="route('backend-users.index')" :active="route().current('backend.users')">
                                     Pengguna
                                 </BreezeNavLink>
                                 <BreezeNavLink :href="route('backend.welcome')" :active="route().current('backend')">

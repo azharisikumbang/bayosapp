@@ -1,5 +1,4 @@
 <script setup>
-
 import { Head } from '@inertiajs/inertia-vue3';
 import BackendLayout from '@/Layouts/Backend.vue';
 </script>
