@@ -16,64 +16,64 @@ import SidebarNavLinkTitle from "./SidebarNavLinkTitle.vue";
       </div>
       <!-- end sidebar toggle -->
       <SidebarNavLinkTitle>Beranda</SidebarNavLinkTitle>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Dashboard
       </SidebarNavLink>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Analitik
       </SidebarNavLink>
 
       <!-- operasional::start -->
       <SidebarNavLinkTitle>operasional</SidebarNavLinkTitle>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Pemesanan
       </SidebarNavLink>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Transaksi
       </SidebarNavLink>
       <!-- operasional::end -->
 
       <!-- master::start -->
       <SidebarNavLinkTitle>master</SidebarNavLinkTitle>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Produk
       </SidebarNavLink>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Varian Produk
       </SidebarNavLink>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Grup Varian Produk
       </SidebarNavLink>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin-product-category.index')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Kategori Produk
       </SidebarNavLink>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Status Order
       </SidebarNavLink>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Status Order Item
       </SidebarNavLink>
       <!-- master::end -->
 
       <!-- customer::start -->
       <SidebarNavLinkTitle>pelanggan</SidebarNavLinkTitle>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Pelanggan
       </SidebarNavLink>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Wawasan Pelanggan
       </SidebarNavLink>
       <!-- customer::end -->
 
       <!-- customer::start -->
       <SidebarNavLinkTitle>Tambahan</SidebarNavLinkTitle>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Pengaturan Akun
       </SidebarNavLink>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Dokumentasi
       </SidebarNavLink>
-      <SidebarNavLink :route="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Keluar
       </SidebarNavLink>
       <!-- customer::end -->
