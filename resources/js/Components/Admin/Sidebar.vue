@@ -38,10 +38,10 @@ import SidebarNavLinkTitle from "./SidebarNavLinkTitle.vue";
       <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Produk
       </SidebarNavLink>
-      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin-product-variant.index')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Varian Produk
       </SidebarNavLink>
-      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin-product-variant-group.index')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Grup Varian Produk
       </SidebarNavLink>
       <SidebarNavLink :href="route('admin-product-category.index')" icon="fad fa-shopping-cart text-xs mr-2">
