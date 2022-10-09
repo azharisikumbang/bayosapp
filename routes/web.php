@@ -3,6 +3,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\VariantGroupController;
 use App\Http\Controllers\UserManagementController;
@@ -52,6 +53,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin'], function() {
     Route::resource('product-categories', ProductCategoryController::class)->names('-product-category');
     Route::resource('product-variant-groups', VariantGroupController::class)->names('-product-variant-group');
     Route::resource('product-variants', VariantController::class)->names('-product-variant');
+    Route::resource('products', ProductController::class)->names('-product');
 });
 
 require __DIR__.'/auth.php';

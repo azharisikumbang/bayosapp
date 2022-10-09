@@ -47,7 +47,7 @@ class ProductCategoryController extends Controller
     {
         $productCategory = ProductCategory::create($request->validated());
 
-        return redirect()->route('admin-product-category.show', [ 'product_category' => $productCategory->id ]);
+        return redirect()->route('admin-product-category.index');
     }
 
     /**

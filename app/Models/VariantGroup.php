@@ -10,4 +10,9 @@ class VariantGroup extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function variants() 
+    {
+        return $this->hasMany(Variant::class, 'variant_group_id');
+    } 
 }

@@ -35,7 +35,7 @@ import SidebarNavLinkTitle from "./SidebarNavLinkTitle.vue";
 
       <!-- master::start -->
       <SidebarNavLinkTitle>master</SidebarNavLinkTitle>
-      <SidebarNavLink :href="route('admin.dashboard')" icon="fad fa-shopping-cart text-xs mr-2">
+      <SidebarNavLink :href="route('admin-product.index')" icon="fad fa-shopping-cart text-xs mr-2">
         Data Produk
       </SidebarNavLink>
       <SidebarNavLink :href="route('admin-product-variant.index')" icon="fad fa-shopping-cart text-xs mr-2">
