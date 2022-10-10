@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Product;
+use App\Models\VariantGroup;
 use App\Models\ProductCategory;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -54,11 +55,15 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function show(Product $product)
     {
-        dd($product->images[1]->image_location); 
+        Return Inertia::render('Admin/Product/Show', [
+            'product' => $product->load(['category', 'images'])->toArray(),
+            'available_variants' => VariantGroup::with('variants')->select('id', 'name')->latest()->get()->toArray(),
+            'showModal' => false
+        ]);
     }
 
     /**

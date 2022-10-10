@@ -14,7 +14,9 @@ class ProductImages extends Model
 
     protected $fillable = ['product_id', 'url'];
 
-    private string $storagePath = 'public/product-images/';
+    protected $appends = ['image_location'];
+
+    private string $storagePath = 'product-images/';
 
     private ?UploadedFile $uploadedFile = null;
 
@@ -44,6 +46,6 @@ class ProductImages extends Model
 
     public function saveToDisk() 
     {
-        return $this->uploadedFile->storePubliclyAs($this->storagePath, $this->url);
+        return $this->uploadedFile->storePubliclyAs('public/' . $this->storagePath, $this->url);
     }
 }

@@ -77,7 +77,7 @@ const displayPreviewImages = (e) => {
                             </div>
                             <div class="mb-3 mt-4">
                                 <BreezeLabel class="mb-3" for="Preview" value="Gambar Preview Produk" />
-                                <ul class="flex flex-1 flex-wrap -m-1 mb-4 "  v-if="form.previews.length > 0">
+                                <ul class="flex flex-1 flex-wrap -m-1 mb-4" v-if="form.previews.length > 0">
                                     <li class="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24"  v-for="image in form.previews">
                                         <img :src="image" class="img-preview w-full h-full sticky object-cover rounded-md bg-fixed" />
                                     </li>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductVariantListController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -54,6 +55,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin'], function() {
     Route::resource('product-variant-groups', VariantGroupController::class)->names('-product-variant-group');
     Route::resource('product-variants', VariantController::class)->names('-product-variant');
     Route::resource('products', ProductController::class)->names('-product');
+
+    Route::post('sku', [ProductVariantListController::class, 'store'])->name('-sku.store');
 });
 
 require __DIR__.'/auth.php';
