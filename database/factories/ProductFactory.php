@@ -17,7 +17,9 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => ucfirst(fake()->sentence(10)),
+            'label' => fake()->lexify(str_repeat('?', rand(4, 8))),
+            'price' => fake()->numberBetween(500_000, 10_000_000)
         ];
     }
 }

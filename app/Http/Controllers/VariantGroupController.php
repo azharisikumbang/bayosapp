@@ -41,7 +41,7 @@ class VariantGroupController extends Controller
     {
         VariantGroup::create($request->validated());
 
-        return redirect()->back();
+        return redirect()->route('admin-product-variant-group.index');
     }
 
     /**

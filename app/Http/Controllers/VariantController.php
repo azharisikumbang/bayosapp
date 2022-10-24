@@ -46,7 +46,7 @@ class VariantController extends Controller
     public function store(StoreVariantRequest $request)
     {
         $validated = $request->validated();
-        $variant = Variant::make([...$validated, 'variant_group_id' => $validated['group']]);
+        $variant = Variant::make([...$validated, 'label' => $validated['sku'], 'variant_group_id' => $validated['group']]);
         $variant->save();
 
         return redirect()->route('admin-product-variant.index');

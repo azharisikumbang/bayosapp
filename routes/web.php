@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\ProductVariantListController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\SkuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\VariantGroupController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductVariantListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +57,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin'], function() {
     Route::resource('product-variants', VariantController::class)->names('-product-variant');
     Route::resource('products', ProductController::class)->names('-product');
 
-    Route::post('sku', [ProductVariantListController::class, 'store'])->name('-sku.store');
+    Route::get('skus', [SkuController::class, 'index'])->name('-sku.index');
+    // Route::get('skus/{product}', [SkuController::class, 'store'])->name('-sku.store');
+    Route::post('skus/{product}', [SkuController::class, 'store'])->name('-sku.store');
+    // Route::resource('skus', SkuController::class)->names('-sku');
 });
 
 require __DIR__.'/auth.php';

@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Product/Index', [
-            'products' => Product::with(['category'])->latest()->paginate(10)->toArray()
+            'products' => Product::with(['detail', 'category'])->latest()->paginate(10)->toArray()
         ]);
     }
 
@@ -44,11 +44,11 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $validated = $request->validated();
-        $product = Product::make([...$validated, 'product_category_id' => $validated['product_category']]);
+        $product = Product::make([...$validated, 'label' => $validated['sku'], 'product_category_id' => $validated['product_category']]);
         $product->saveThumbnail($validated['thumbnail'])->save();
         $product->addProductImages($validated['images']);
 
-        return redirect()->route('admin-product.index');
+        return redirect()->route('admin-product.show', ['product' => $product->id]);
     }
 
     /**

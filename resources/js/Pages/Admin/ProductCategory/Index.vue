@@ -30,10 +30,9 @@ defineProps([
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
-                            <tr class="border-b border-gray-200 hover:bg-gray-100" v-for="pc in product_categories.data">
+                            <tr class="border-b border-gray-200 hover:bg-gray-100" v-for="pc in product_categories.data" v-if="product_categories.data.length > 0">
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     {{ pc.name }}
-                                    {{ }}
                                 </td>
                                 <td class="py-3 px-6 text-left">
                                     {{ pc.display_name }}
@@ -63,16 +62,19 @@ defineProps([
                                     </div>
                                 </td>
                             </tr>
+                            <tr class="border-b border-gray-200 hover:bg-gray-100" v-else>
+                                <td colspan="4" class="text-center py-3 px-6 text-left whitespace-nowrap">Tidak ada data.</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
                 
                 <div>
                     <div class="flex mt-4">
-                        <Link :href="product_categories.prev_page_url" class="underline">
+                        <Link v-if="product_categories.prev_page_url" :href="product_categories.prev_page_url" class="underline">
                             Sebelumnya     
                         </Link>
-                        <Link :href="product_categories.next_page_url" class="underline ml-4">
+                        <Link v-if="product_categories.next_page_url" :href="product_categories.next_page_url" class="underline ml-4">
                             Selanjutnya    
                         </Link>
                     </div>

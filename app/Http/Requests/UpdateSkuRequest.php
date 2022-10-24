@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreVariantRequest extends FormRequest
+class UpdateSkuRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreVariantRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,9 +24,7 @@ class StoreVariantRequest extends FormRequest
     public function rules()
     {
         return [
-            'variant' => 'required|string|max:255',
-            'sku' => 'required|string',
-            'group' => 'required|exists:App\Models\VariantGroup,id'
+            //
         ];
     }
 }

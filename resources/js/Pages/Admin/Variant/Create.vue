@@ -11,6 +11,7 @@ defineProps([
 
 const form = useForm({
     variant: '',
+    sku: '',
     group: 1,
 });
 
@@ -25,7 +26,7 @@ const submit = () => {
 <template>
     <AdminLayout>
         <div class="flex justify-between mt-4">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Grup Varian Baru</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Varian Baru</h2>
             <Link :href="route('admin-product-variant.index')" class="underline ml-4">
                 Lihat Varian Produk
             </Link>
@@ -36,9 +37,17 @@ const submit = () => {
                 <div class="w-full">
                     <div class="bg-white shadow-md rounded my-6 py-6 px-6">
                         <form @submit.prevent="submit">
-                            <div class="mb-3">
-                                <BreezeLabel for="variant" value="Nama Varian" />
-                                <BreezeInput id="variant" type="text" class="mt-1 block w-full" v-model="form.variant" required autofocus autocomplete="name" />
+                            <div class="mb-3 grid grid-cols-3 gap-4">
+                                <div class="col-span-2">
+                                    <BreezeLabel for="variant" value="Nama Varian" />
+                                    <BreezeInput id="variant" type="text" class="mt-1 block w-full" v-model="form.variant" required autofocus autocomplete="variant" />
+                                </div>
+                                <div>
+                                    <label for="sku" class="block font-medium text-sm text-gray-700">
+                                        SKU Label (<Link class="italic text-red-500 underline" :href="route('admin-product.index')">*baca petunjuk penulisan</Link>)
+                                    </label>
+                                    <BreezeInput id="sku" type="text" class="mt-1 block w-full" v-model="form.sku" onkeyup="this.value = this.value.toUpperCase()" required />
+                                </div>
                             </div>
                             <div class="mt-4">
                                 <BreezeLabel for="group" value="Pilih Grup Varian" />

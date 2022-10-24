@@ -23,6 +23,7 @@ defineProps([
                     <table class="min-w-max w-full table-auto">
                         <thead>
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">SKU Label</th>
                                 <th class="py-3 px-6 text-left">Varian Produk</th>
                                 <th class="py-3 px-6 text-left">Grup Varian</th>
                                 <th class="py-3 px-6 text-center"></th>
@@ -30,6 +31,9 @@ defineProps([
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
                             <tr class="border-b border-gray-200 hover:bg-gray-100" v-for="variant in variants.data" v-if="variants.data.length > 0">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    {{ variant.label.toUpperCase() }}
+                                </td>
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     {{ variant.variant }}
                                 </td>
@@ -58,7 +62,7 @@ defineProps([
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200 hover:bg-gray-100" v-else>
-                                <td colspan="2" class="py-3 px-6 text-left whitespace-nowrap text-center">Tidak ada data.</td>
+                                <td colspan="4" class="py-3 px-6 text-left whitespace-nowrap text-center">Tidak ada data.</td>
                             </tr>
                         </tbody>
                     </table>

@@ -20,4 +20,9 @@ class ProductCategory extends Model
     {
         return $this->hasMany(self::class, 'parent');
     }
+
+    public function products() 
+    {
+        return $this->hasMany(Product::class, 'product_category_id');
+    }
 }

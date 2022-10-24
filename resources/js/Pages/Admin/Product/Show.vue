@@ -13,40 +13,49 @@ defineProps([
 
 const form = useForm({
     product: null,
-    variants: []
+    variants: {},
+    selectedVariants: [],
+    length: 0   
 });
 
 const checkVariant = (e) => {
     let selectedVariantId = e.target.dataset.id;
-    let found = form.variants.filter((el) => el.variantId == selectedVariantId)[0];
-    let foundedIndex = form.variants.indexOf(found);
+    let variantGroupId = e.target.dataset.parentId;
+    let variantName = e.target.value;
+    let variantGroupName = e.target.dataset.parentName;    
+
+    if (!(form.variants.hasOwnProperty(variantGroupId))) {
+        form.variants[variantGroupId] = {
+            'id': variantGroupId,
+            'group': variantGroupName,
+            'variants': []
+        };
+    }
+
+    let found = form.variants[variantGroupId].variants.filter((el) => el.id == selectedVariantId)[0];
+    let foundedIndex = form.variants[variantGroupId].variants.indexOf(found);
     if (foundedIndex > -1) { // variant exists
-        form.variants.splice(foundedIndex);
+        form.variants[variantGroupId].variants.splice(foundedIndex);
+        if(form.variants[variantGroupId].variants.length < 1) delete form.variants[variantGroupId];
         return;
     }
 
-    let variantName = e.target.value;
-    let variantGroupId = e.target.dataset.parentId;
-    let variantGroupName = e.target.dataset.parentName;
     let variantObj = {
-        'variantId': selectedVariantId,
-        'variantName': variantName,
-        'variantGroupId': variantGroupId,
-        'variantGroupName': variantGroupName,
-        'amount': 0,
-        'quantity': 0
+        'id': selectedVariantId,
+        'name': variantName
     }
 
-    form.variants.push(variantObj);
-    form.variants.sort((a,b) => (a.variantGroupId > b.variantGroupId) ? 1 : ((b.variantGroupId > a.variantGroupId) ? -1 : 0));
+    form.variants[variantGroupId].variants.push(variantObj);
+
+    form.length = Object.keys(form.variants).reduce((prev, key) => prev * form.variants[key].variants.length, 1);
 }
 
-const amoutToRupiah = (amount) => {
+const amoutToRupiah = (price) => {
     return new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR',
         minimumFractionDigits: 0,
-    }).format(amount)
+    }).format(price)
 }
 
 const page = usePage();
@@ -55,8 +64,37 @@ onMounted(() => {
     form.product = page.props.value.product.id;
 });
 
-const submit = () => {
-    form.post(route('admin-sku.store'));
+const submit = (e) => {
+    let variants = {};
+    for (const el of e.target.elements) {
+        if (el.tagName.toLowerCase() == 'button') continue;
+
+        let index = el.dataset.index;
+
+        console.log(el.value);
+
+        if (!(variants.hasOwnProperty(index))) {
+            variants[index] = { 
+                index: index,
+                price: 0,
+                quantity: 0,
+                variants: []
+             }
+        }
+        
+        if (el.name == 'price') variants[index].price = el.value;
+        if (el.name == 'quantity') variants[index].quantity = el.value;
+        
+        if (el.dataset.type == 'variant') {
+            let name = el.name.toLowerCase();
+            let value = el.value;
+            variants[index]['variants'].push({ name: name, value: value });
+        }
+    }
+
+    form.selectedVariants = variants;
+
+    form.post(route('admin-sku.store', { product: form.product }));
 }
 
 </script>
@@ -88,7 +126,8 @@ const submit = () => {
                                     <div class="ml-4">
                                         <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ product.category.display_name }}</h2>
                                         <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ product.name }}</h1>
-                                        <p class="leading-relaxed">{{ product.description }}</p>
+                                        <p class="italic text-gray-600 mb-3">Base Price : {{ amoutToRupiah(product.price) }}</p>
+                                        <p class="leading-relaxed" v-html="product.description"></p>
                                     </div>
                                 </div>
                             </div>
@@ -97,34 +136,33 @@ const submit = () => {
                                     <BreezeButton type="button" @click="showModal = true" class="text-lg text-gray-600 font-medium">
                                         Tambah Varian Produk
                                     </BreezeButton>
-                                    <BreezeButton class="bg-orange-500 hover:bg-orange-800 ml-4 text-lg text-gray-600 font-medium">
+                                    <BreezeButton type="submit" class="bg-orange-500 hover:bg-orange-800 ml-4 text-lg text-gray-600 font-medium">
                                         Perbaharui Data Varian Produk
                                     </BreezeButton>
                                 </div>
-                                <table class="min-w-max w-full table-auto mt-4">
+                                <table class="min-w-max w-full table-auto mt-4" v-show="Object.keys(form.variants).length > 0">
                                     <thead>
                                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                            <th class="py-3 px-6 text-left">Grup Varian</th>
-                                            <th class="py-3 px-6 text-left">Varian</th>
-                                            <th class="py-3 px-6 text-left">Harga</th>
+                                            <th class="py-3 px-6 text-left" v-for="variant in form.variants">{{ variant.group }}</th>
+                                            <th class="py-3 px-6 text-left">Tambahan Harga (+ {{ amoutToRupiah(product.price) }})</th>
                                             <th class="py-3 px-6 text-left">Unit</th>
                                             <th class="py-3 px-6 text-center"></th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-gray-600 text-sm font-light">
-                                        <tr class="border-b border-gray-200 hover:bg-gray-100" v-for="selectedVariant in form.variants" v-if="form.variants.length > 0">
-                                            <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                {{ selectedVariant.variantGroupName }}
+                                        <tr class="border-b border-gray-200 hover:bg-gray-100" v-for="index in form.length" :index="index">
+                                            <td class="py-3 px-6 text-left whitespace-nowrap" v-for="variant in form.variants">
+                                                <select class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" data-type="variant" :name="variant.group.toLowerCase()" :data-index="index" required>
+                                                    <template v-for="v in variant.variants">
+                                                        <option :value=v.id>{{ v.name }}</option>
+                                                    </template>
+                                                </select>
                                             </td>
                                             <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                {{ selectedVariant.variantName }}
+                                                Rp. <BreezeInput type="number" class="w-40" :data-index="index" name="price" :value="0"></BreezeInput>
                                             </td>
                                             <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                Rp. <BreezeInput type="number" @change="" :value="selectedVariant.amount"></BreezeInput>
-                                                <!-- {{ amoutToRupiah(selectedVariant.amount) }} -->
-                                            </td>
-                                            <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                <BreezeInput type="number" @change="" :value="selectedVariant.quantity"></BreezeInput>
+                                                <BreezeInput type="number" class="w-24" :data-index="index" name="quantity" :value="1"></BreezeInput>
                                             </td>                                 
                                             <td class="py-3 px-6 text-center">
                                                 <div class="flex item-center justify-end">
@@ -136,9 +174,11 @@ const submit = () => {
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr class="border-b border-gray-200 hover:bg-gray-100" v-else>
-                                            <td colspan="5" class="py-3 px-6 text-left whitespace-nowrap text-center">Tidak ada data.</td>
-                                        </tr>
+                                        <!-- <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                            <td :colspan="Object.keys(form.variants).length + 3" class="py-3 px-6 text-left whitespace-nowrap text-center">
+                                                <button type="button" class="underline">Tambah Varian</button>
+                                            </td>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>

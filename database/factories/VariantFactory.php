@@ -17,7 +17,8 @@ class VariantFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'variant' => strtoupper($this->faker->word()),
+            'label' => $this->faker->lexify('???'),
         ];
     }
 }

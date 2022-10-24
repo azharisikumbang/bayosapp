@@ -26,6 +26,8 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'description' => 'nullable',
+            'sku' => 'required|string',
+            'price' => 'required|numeric|digits_between:0,9999999999.99',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'product_category' => 'required|exists:App\Models\ProductCategory,id',
             'images' => 'sometimes|nullable|array'

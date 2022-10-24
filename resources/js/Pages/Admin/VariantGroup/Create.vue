@@ -10,11 +10,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('admin-product-variant-group.store'), {
-        onFinish: () => {
-            alert("finish");
-        }
-    });
+    form.post(route('admin-product-variant-group.store'));
 }
 
 </script>

@@ -16,11 +16,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('admin-product-category.store'), {
-        onFinish: () => {
-            alert("finish");
-        }
-    });
+    form.post(route('admin-product-category.store'));
 }
 
 </script>
@@ -41,12 +37,12 @@ const submit = () => {
                         <form @submit.prevent="submit">
                             <div>
                                 <BreezeLabel for="name" value="Nama Kategori" />
-                                <BreezeInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus autocomplete="name" />
+                                <BreezeInput placeholder="cth: angkola-collection" id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus autocomplete="name" />
                             </div>
 
                             <div class="mt-4">
                                 <BreezeLabel for="display_name" value="Tampilkan Sebagai" />
-                                <BreezeInput id="display_name" type="text" class="mt-1 block w-full" v-model="form.display_name" />
+                                <BreezeInput placeholder="cth: Angkola Collection" id="display_name" type="text" class="mt-1 block w-full" v-model="form.display_name" />
                             </div>
 
                             <div class="mt-4">

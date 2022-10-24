@@ -13,7 +13,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'thumbnail', 'product_category_id'];
+    protected $fillable = ['name', 'description', 'thumbnail', 'product_category_id', 'label', 'price'];
 
     protected $appends = ['thumbnail_location'];
 
@@ -28,6 +28,17 @@ class Product extends Model
     {
         return $this->hasMany(ProductImages::class, 'product_id');
     }
+
+    public function variants()
+    {
+        return $this->hasMany(Sku::class, 'product_id');
+    }
+
+    public function detail()
+    {
+        return $this->variants()->with('variants');
+    }
+    
 
     public function addProductImages(array $images) 
     {

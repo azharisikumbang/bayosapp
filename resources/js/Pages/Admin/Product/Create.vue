@@ -12,7 +12,9 @@ defineProps([
 
 const form = useForm({
     name: '',
+    sku: '',
     description: '',
+    price: 0,
     thumbnail: null,
     product_category: -1,
     images: [],
@@ -54,13 +56,25 @@ const displayPreviewImages = (e) => {
                 <div class="w-full">
                     <div class="bg-white shadow-md rounded my-6 py-6 px-6">
                         <form @submit.prevent="submit" enctype='multipart/form-data'>
+                            <div class="mb-3 grid grid-cols-3 gap-4">
+                                <div class="col-span-2">
+                                    <BreezeLabel for="name" value="Nama Produk" />
+                                    <BreezeInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus autocomplete="name" />
+                                </div>
+                                <div>
+                                    <label for="sku" class="block font-medium text-sm text-gray-700">
+                                        SKU Label (<Link class="italic text-red-500 underline" :href="route('admin-product.index')">*baca petunjuk penulisan</Link>)
+                                    </label>
+                                    <BreezeInput id="sku" type="text" class="mt-1 block w-full" v-model="form.sku" onkeyup="this.value = this.value.toUpperCase()" required />
+                                </div>
+                            </div>
                             <div class="mb-3">
-                                <BreezeLabel for="name" value="Nama Produk" />
-                                <BreezeInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus autocomplete="name" />
+                                <BreezeLabel for="price" value="Harga Produk" />
+                                <BreezeInput id="price" type="number" class="mt-1 block w-full" v-model="form.price" required />
                             </div>
                             <div class="mb-3">
                                 <BreezeLabel for="description" value="Deskripsi Produk" />
-                                <TextareaInput id="description" type="text" class="mt-1 block w-full" v-model="form.description" />
+                                <TextareaInput id="description" class="mt-1 block w-full" v-model="form.description" />
                             </div>
                             <div class="mb-3">
                                 <BreezeLabel for="thumbnail" value="Thumnail Produk" />

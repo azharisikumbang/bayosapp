@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductCategory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Sku>
  */
-class ProductCategoryFactory extends Factory
+class SkuFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,7 @@ class ProductCategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => strtoupper(fake()->word()),
-            'display_name' => strtoupper(fake()->sentence(2))
+            //
         ];
     }
 }

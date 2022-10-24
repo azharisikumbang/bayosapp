@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('variants', function (Blueprint $table) {
+        Schema::create('variant_sku', function (Blueprint $table) {
             $table->id();
-            $table->string('variant');
-            $table->string('label'); // lavel for sku
-            $table->foreignId('variant_group_id')->references('id')->on('variant_groups');
+            $table->foreignId('variant_id')->references('id')->on('variants');
+            $table->foreignId('sku_id')->references('id')->on('skus');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('variants');
+        Schema::dropIfExists('variant_sku');
     }
 };

@@ -1,43 +1,75 @@
 <script setup>
-    import AdminLayout from "@/Layouts/Admin.vue";
-    import { Link } from '@inertiajs/inertia-vue3';
-    
-    defineProps([
-        'products'
-    ]);
-    </script>
-    
-    <template>
-        <AdminLayout>
-            <div class="flex justify-between mt-4">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data Produk Tersedia</h2>
-                <Link :href="route('admin-product.create')" class="underline ml-4">
-                    Tambah Produk Baru
-                </Link>
-            </div>
-    
-            <div class="overflow-x-auto">
-            <div class="min-w-screen min-h-screen bg-gray-100 flex bg-gray-100 font-sans overflow-hidden">
-                <div class="w-full">
-                    <div class="bg-white shadow-md rounded my-6">
-                        <table class="min-w-max w-full table-auto">
-                            <thead>
-                                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                    <th class="py-3 px-6 text-left">Nama Item</th>
-                                    <th class="py-3 px-6 text-left">Kategori</th>
-                                    <th class="py-3 px-6 text-center"></th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-600 text-sm font-light">
-                                <tr class="border-b border-gray-200 hover:bg-gray-100" v-for="product in products.data" v-if="products.data.length > 0">
-                                    <td class="py-3 px-6 text-left whitespace-nowrap">
-                                        <Link :href="route('admin-product.show', { id: product.id })" class="underline">
-                                            {{ product.name }}    
+import AdminLayout from "@/Layouts/Admin.vue";
+import { Link, usePage } from '@inertiajs/inertia-vue3';
+import { onMounted } from "vue";
+
+defineProps([
+    'products'
+]);
+
+onMounted(() => {
+    console.log(usePage().props.value.products);
+});
+
+const amoutToRupiah = (price) => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+    }).format(price)
+}
+
+</script>
+
+<template>
+    <AdminLayout>
+        <div class="flex justify-between mt-4">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data Produk Tersedia</h2>
+            <Link :href="route('admin-product.create')" class="underline ml-4">
+                Tambah Produk Baru
+            </Link>
+        </div>
+
+        <div class="overflow-x-auto">
+        <div class="min-w-screen min-h-screen bg-gray-100 flex bg-gray-100 font-sans overflow-hidden">
+            <div class="w-full">
+                <div class="bg-white shadow-md rounded my-6">
+                    <table class="min-w-max w-full table-auto">
+                        <thead class="text-center">
+                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                <th class="border border-gray-400 py-3 px-6 text-center" rowspan="2">Produk</th>
+                                <th class="border border-gray-400 py-3 px-6 text-center" rowspan="2">Kategori</th>
+                                <th class="border border-gray-400 py-3 px-6 text-center" colspan="3">Varian</th>
+                                <th class="border border-gray-400 py-3 px-6 text-center" rowspan="2"></th>
+                            </tr>
+                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                <th class="border border-gray-400 py-3 px-6 text-center">SKU</th>
+                                <th class="border border-gray-400 py-3 px-6 text-center">Harga</th>
+                                <th class="border border-gray-400 py-3 px-6 text-center">Stok</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light">
+                            <template v-for="product in products.data" v-if="products.data.length > 0">
+                                <tr class="border-b border-gray-200 hover:bg-gray-100" v-for="(detail, index) in product.detail">
+                                    <td class="py-3 px-6 text-left whitespace-nowrap border border-gray-400" :rowspan="product.detail.length" v-if="index < 1">
+                                        <Link :href="route('admin-product.show', { id: product.id })" class="underline text-sm font-medium text-gray-900">
+                                            {{ product.name }}
                                         </Link>
-                                    </td>
-                                    <td class="py-3 px-6 text-left whitespace-nowrap">
+                                        <span class="block italic text-sm text-gray-500">base price: {{ amoutToRupiah(product.price) }}</span>
+                                    </td>                                
+                                    <td class="py-3 px-6 text-center text-sm whitespace-nowrap border border-gray-400" :rowspan="product.detail.length" v-if="index < 1">
                                         {{ product.category.display_name }}
-                                    </td>                                    <td class="py-3 px-6 text-center">
+                                    </td>  
+                                    <td class="py-3 px-6 text-center text-sm whitespace-nowrap border border-gray-400">
+                                        {{ detail.value.toUpperCase() }}
+                                    </td>  
+                                    <td class="py-3 px-6 text-center whitespace-nowrap border border-gray-400">
+                                        {{ amoutToRupiah(product.price + detail.additional_price) }}
+                                    </td>                                  
+                                    <td class="py-3 px-6 text-center whitespace-nowrap border border-gray-400">
+                                        {{ detail.quantity }} unit
+                                    </td>                               
+                                    <td class="py-3 px-6 text-center border border-gray-400">
                                         <div class="flex item-center justify-end">
                                             <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,25 +90,29 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="border-b border-gray-200 hover:bg-gray-100" v-else>
-                                    <td colspan="2" class="py-3 px-6 text-left whitespace-nowrap text-center">Tidak ada data.</td>
+                            </template>
+                            <template v-else>
+                                <tr class="border-b border-gray-200 hover:bg-gray-100 border border-gray-400">
+                                    <td colspan="6" class="py-3 px-6 text-left whitespace-nowrap text-center">Tidak ada data.</td>
                                 </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div>
-                        <div class="flex mt-4">
-                            <Link :href="products.prev_page_url" class="underline" v-if="products.prev_page_url">
-                                Sebelumnya     
-                            </Link>
-                            <Link :href="products.next_page_url" class="underline ml-4" v-if="products.next_page_url">
-                                Selanjutnya    
-                            </Link>
-                        </div>
+                            </template>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div>
+                    <div class="flex mt-4">
+                        <Link :href="products.prev_page_url" class="underline" v-if="products.prev_page_url">
+                            Sebelumnya     
+                        </Link>
+                        <Link :href="products.next_page_url" class="underline ml-4" v-if="products.next_page_url">
+                            Selanjutnya    
+                        </Link>
                     </div>
                 </div>
             </div>
         </div>
-        </AdminLayout>
-    </template>
+    </div>
+    </AdminLayout>
+</template>

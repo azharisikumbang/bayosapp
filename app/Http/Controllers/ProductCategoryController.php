@@ -16,7 +16,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $productCategories = ProductCategory::with('parent')->latest()->paginate(10);
+        $productCategories = ProductCategory::with('parent')->orderBy('name')->paginate(10);
 
         return Inertia::render('Admin/ProductCategory/Index', [
             'product_categories' => $productCategories->toArray()
