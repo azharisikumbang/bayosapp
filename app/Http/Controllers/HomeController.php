@@ -16,7 +16,7 @@ class HomeController extends Controller
         $products = Product::with([
             'category' => fn($q) => $q->select(['id', 'name', 'display_name'])
         ])
-        ->select(['id', 'name', 'price', 'product_category_id', 'thumbnail'])
+        ->select(['name', 'price', 'product_category_id', 'thumbnail', 'slug'])
         ->get(); 
 
         return Inertia::render('Home/Index', [
