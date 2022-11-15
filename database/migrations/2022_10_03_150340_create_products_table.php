@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->text('name');
+            $table->text('slug');
             $table->tinyText('label'); // label for sku
             $table->text('description')->nullable();
             $table->string('thumbnail')->nullable();
