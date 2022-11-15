@@ -34,10 +34,10 @@ class DatabaseSeeder extends Seeder
 
         $productCategory = ProductCategory::factory(20)->create();
 
-        $productCategory->each(function($category) {
-            $products = Product::factory()->create(10);
-            $category->products()->saveMany($products);
-        });
+        // $productCategory->each(function($category) {
+        //     $products = Product::factory(10)->create();
+        //     $category->products()->saveMany($products);
+        // });
 
         
     }
