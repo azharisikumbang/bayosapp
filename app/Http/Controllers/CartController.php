@@ -55,22 +55,26 @@ class CartController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Product  $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $cart)
     {
-        //
+        Cart::updateQuantity($cart->id, $request->quantity);
+
+        return response()->json((Cart::getContent())->toArray());
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Product $cart)
     {
-        //
+        Cart::remove($cart->id);
+
+        return response()->json((Cart::getContent())->toArray());
     }
 }

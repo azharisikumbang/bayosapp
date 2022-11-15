@@ -84,6 +84,56 @@ class CartService
         return $this->pushItemToCart($item);
     }
 
+    public function remove(int $id) : self
+    {
+        $cartItem = $this->getCartItems();
+
+        $index = $cartItem->search(function($item) use($id) {
+            return $item->get('id') == $id;
+        });
+
+        $cartItem->forget($index);
+
+        $cartManager = $this->getContent();
+        $cartManager->put(self::CART_ITEM_NAME, $cartItem);
+        $total = $cartManager->get(self::CART_ITEM_NAME)->sum('total');
+        $cartManager->put(
+            'total', 
+            $total
+        );
+        
+        $this->session->put(self::CART_NAME, $cartManager);
+
+        return $this;
+    }
+
+    public function updateQuantity(int $id, int $qty) : self
+    {
+        $cartItem = $this->getCartItems();
+        $cartItem = $cartItem->map(function($item) use ($id, $qty) {
+            if ($item->get('id') != $id) return $item;
+            
+            return $item
+                ->put('quantity', $qty)
+                ->put('total', $qty * $item->get('price'))
+            ;
+        });
+
+        $item = $cartItem->filter(fn ($item) => $item->get('id') == $id)->first();
+        $cartManager = $this->getContent();
+        $cartManager->put(self::CART_ITEM_NAME, $cartItem);
+        $total = $cartManager->get(self::CART_ITEM_NAME)->sum('total');
+        $cartManager->put(
+            'total', 
+            $total
+        );
+        
+        $this->session->put(self::CART_NAME, $cartManager);
+        
+
+        return $this;
+    }
+
     public function clear() : void
     {
         $this->session->forget(self::CART_NAME);
