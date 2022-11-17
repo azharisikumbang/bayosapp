@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\SkuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariantController;
+use App\Http\Controllers\UserSettingController;
 use App\Http\Controllers\VariantGroupController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ProductCategoryController;
@@ -34,6 +35,17 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// customer page
+Route::group([
+    'prefix' => 'user', 
+    'as' => 'user', 
+    'middleware' => ['auth', 'verified']
+], function() { 
+    Route::get('settings', [UserSettingController::class, 'index'])->name('.setting.index');
+    Route::get('settings/edit', [UserSettingController::class, 'edit'])->name('.setting.edit');
+    Route::put('settings', [UserSettingController::class, 'update'])->name('.setting.update');
+});
 
 // super-admin routes
 Route::group(['prefix' => 'backend', 'as' => 'backend'], function() {
