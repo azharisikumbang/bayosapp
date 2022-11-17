@@ -66,6 +66,8 @@ class User extends Authenticatable
 
     protected function pictureImageUrl() : Attribute
     {
+        if (is_null($this->picture)) return Attribute::make(fn () => null);
+
         return Attribute::make(
             get: fn($value) => sprintf("/%s/%s", 'storage', $this->removeProfilePublicPath($this->picture))
         );
@@ -86,6 +88,8 @@ class User extends Authenticatable
 
     protected function formattedDobString() : Attribute
     {
+        if (is_null($this->dob)) return Attribute::make(fn() => null);
+
         return Attribute::make(function($value) {
             $month = [
                 'Januari',
