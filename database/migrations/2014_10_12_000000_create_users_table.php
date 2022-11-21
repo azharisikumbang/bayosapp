@@ -17,6 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->date('dob')->nullable();
+            $table->string('picture')->nullable();
+            $table->enum('gender', [0, 1, 2, 9])->default(0); // ISO/IEC 5218
+            $table->text('address')->nullable();
+            $table->string('phone', 32)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
