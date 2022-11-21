@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Database\Eloquent\Model;
@@ -13,11 +14,18 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'thumbnail', 'product_category_id', 'label', 'price'];
+    protected $fillable = ['name', 'description', 'thumbnail', 'product_category_id', 'label', 'price', 'slug'];
 
     protected $appends = ['thumbnail_location'];
 
     private string $IMAGE_LOCATION = 'product-images/';
+
+    public static function booted()
+    {
+        static::creating(function (Product $model) {
+            $model->slug = Str::slug(sprintf("%s-%s", $model->name, Str::random(20)), '-');
+        });
+    }
 
     public function category()
     {
@@ -36,7 +44,7 @@ class Product extends Model
 
     public function detail()
     {
-        return $this->variants()->with('variants');
+        return $this->variants()->with('variants.group');
     }
     
 
@@ -69,5 +77,12 @@ class Product extends Model
         return Attribute::make(
             get: fn($value) => sprintf("%s%s", $this->IMAGE_LOCATION, $this->thumbnail)
         );
+    }
+    
+    public function getAllProductDetails() : Collection
+    {
+        $this->load(['category', 'images', 'detail']);
+
+        return new Collection($this->toArray());
     }
 }

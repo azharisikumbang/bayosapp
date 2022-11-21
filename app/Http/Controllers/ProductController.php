@@ -59,7 +59,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        Return Inertia::render('Admin/Product/Show', [
+        return Inertia::render('Admin/Product/Show', [
             'product' => $product->load(['category', 'images'])->toArray(),
             'available_variants' => VariantGroup::with('variants')->select('id', 'name')->latest()->get()->toArray(),
             'showModal' => false
