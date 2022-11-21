@@ -2,15 +2,17 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 use App\Http\Controllers\SkuController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariantController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserSettingController;
 use App\Http\Controllers\VariantGroupController;
+use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ProductCategoryController;
-use App\Http\Controllers\ProductVariantListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,14 +25,15 @@ use App\Http\Controllers\ProductVariantListController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// public page
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/p/{product:slug}', [ProductDetailController::class, '__invoke']);
+// Route::put('/cart/{product}/update', [UpdateCartItemQuantityController::class, '__invoke'])->name('cart.product.update');
+Route::resource('/cart', CartController::class);
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
+// customer page 
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
