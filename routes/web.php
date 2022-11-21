@@ -50,6 +50,7 @@ Route::group([
 
     // user order page
     Route::get('orders', [UserOrderController::class, 'index'])->name('.order.index');
+    Route::get('orders/{order:order_number}', [UserOrderController::class, 'show'])->name('.order.show');
 });
 
 // super-admin routes

@@ -57,7 +57,7 @@ const amoutToRupiah = (price) => {
                                         {{ index + 1 }}
                                     </th>
                                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <Link class="text-blue-500 hover:underline">{{ order.order_number }}</Link>
+                                        <Link :href="route('user.order.show', { order_number: order.order_number })" class="text-blue-500 hover:underline">{{ order.order_number }}</Link>
                                     </th>
                                     <td class="py-4 px-6">
                                         {{ order.status }}
@@ -69,7 +69,7 @@ const amoutToRupiah = (price) => {
                                         {{ amoutToRupiah(order.amout) }}
                                     </td>
                                     <td class="py-4 px-6 flex justify-center">
-                                        <a href="#" class="font-medium text-blue-500 dark:text-blue-500 hover:underline">Selengkapnya</a>
+                                        <Link :href="route('user.order.show', { order_number: order.order_number })" class="text-blue-500 hover:underline">Selengkapnya</Link>
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center" v-else>
@@ -81,15 +81,19 @@ const amoutToRupiah = (price) => {
                 </div>
 
                 <div class="flex mt-4 justify-between">
-                    <Link :href="orders.prev_page_url" class="text-gray-500 hover:text-gray-800" v-if="orders.prev_page_url">
-                        &larr; Sebelumnya 
-                    </Link>
                     <div>
-                        Halaman {{ orders.current_page }} dari {{ orders.total }}
+                        <Link :href="orders.prev_page_url" class="text-gray-500 hover:text-gray-800"  v-if="orders.prev_page_url">
+                            &larr; Sebelumnya 
+                        </Link>
                     </div>
-                    <Link :href="orders.next_page_url" class="text-gray-500 hover:text-gray-800" v-if="orders.next_page_url">
-                        Selanjutnya &rarr;
-                    </Link>
+                    <div>
+                        Halaman {{ orders.current_page }} dari {{ orders.last_page }}
+                    </div>
+                    <div>
+                        <Link :href="orders.next_page_url" class="text-gray-500 hover:text-gray-800" v-if="orders.next_page_url">
+                            Selanjutnya &rarr;
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

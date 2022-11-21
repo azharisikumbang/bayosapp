@@ -11,16 +11,20 @@ class UserOrderController extends Controller
 {
     public function index() : Response
     {
-        $orders = Order::factory(10)->make();
+        // $orders = Order::factory(20)->create(['customer_id' => auth()->user()->id]);
+        $orders = Order::latest()->paginate(10);
 
         return Inertia::render('User/Order/Index', [
-            'orders' => [
-                'data' => $orders->toArray(),
-                'prev_page_url' => true,
-                'next_page_url' => true,
-                'current_page' => 1,
-                'total' => 10
-            ]
+            'orders' => $orders->toArray()
+        ]);
+    }
+
+    public function show(Order $order) : Response
+    {
+        $order->load(['customer']);
+
+        return Inertia::render('User/Order/Show', [
+            'order' => $order->toArray()
         ]);
     }
 }
