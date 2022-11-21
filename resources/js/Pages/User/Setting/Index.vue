@@ -43,15 +43,15 @@ defineProps(['user']);
                                             </div>
                                             <div class="flex flex-col py-3">
                                                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Tanggal Lahir</dt>
-                                                <dd class="text-lg font-semibold">{{ user.formatted_dob_string }}</dd>
+                                                <dd class="text-lg font-semibold">{{ user.formatted_dob_string ?? '-' }}</dd>
                                             </div>
                                             <div class="flex flex-col py-3">
                                                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Jenis Kelamin</dt>
-                                                <dd class="text-lg font-semibold">{{ user.gender_name }}</dd>
+                                                <dd class="text-lg font-semibold">{{ user.gender_name ?? '-' }}</dd>
                                             </div>
                                             <div class="flex flex-col py-3">
                                                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Alamat</dt>
-                                                <dd class="text-lg font-semibold">{{ user.address }}</dd>
+                                                <dd class="text-lg font-semibold">{{ user.address ?? '-' }}</dd>
                                             </div>
                                         </dl>
                                     </div>
@@ -64,7 +64,7 @@ defineProps(['user']);
                                             </div>
                                             <div class="flex flex-col py-3">
                                                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">No. Handphone</dt>
-                                                <dd class="text-lg font-semibold">{{ user.phone }}</dd>
+                                                <dd class="text-lg font-semibold">{{ user.phone ?? '-' }}</dd>
                                             </div>
                                         </dl>
                                     </div>

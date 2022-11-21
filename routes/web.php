@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VariantController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserSettingController;
 use App\Http\Controllers\VariantGroupController;
 use App\Http\Controllers\ProductDetailController;
@@ -45,9 +46,14 @@ Route::group([
     'as' => 'user', 
     'middleware' => ['auth', 'verified']
 ], function() { 
+    // user setting page
     Route::get('settings', [UserSettingController::class, 'index'])->name('.setting.index');
     Route::get('settings/edit', [UserSettingController::class, 'edit'])->name('.setting.edit');
     Route::put('settings', [UserSettingController::class, 'update'])->name('.setting.update');
+
+    // user order page
+    Route::get('orders', [UserOrderController::class, 'index'])->name('.order.index');
+    Route::get('orders/{order:order_number}', [UserOrderController::class, 'show'])->name('.order.show');
 });
 
 // super-admin routes
